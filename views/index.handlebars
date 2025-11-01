@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>CS361</title>
+
+    <link rel="stylesheet" href="/style.css">
+    <script src="/index.js" charset="utf-8" defer></script>
+  </head>
+  <body>
+
+    <main class="content">
+      {{#ifDefined sessInfo}}
+      Login success! {{sessInfo.username}}
+      {{/ifDefined}}
+    </main>
+    
+  </body>
+</html>

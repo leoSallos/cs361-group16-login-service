@@ -1,0 +1,30 @@
+{
+  "name": "cs361-group16-login-service",
+  "version": "1.0.0",
+  "description": "This is the login verification service repo for sprint 2.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/leoSallos/cs361-group16-login-service.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/leoSallos/cs361-group16-login-service/issues"
+  },
+  "homepage": "https://github.com/leoSallos/cs361-group16-login-service#readme",
+  "dependencies": {
+    "express": "^5.1.0",
+    "express-handlebars": "^8.0.2",
+    "express-session": "^1.18.2",
+    "handlebars": "^4.7.8",
+    "mysql2": "^3.15.3",
+    "nodemon": "^3.1.10",
+    "passport": "^0.7.0"
+  }
+}
