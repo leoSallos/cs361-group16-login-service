@@ -1,0 +1,27 @@
+install sql 8, sql workbench 8.0
+(recommend) create new terminal in vscode, title it SQL
+
+in webapp directory, create "connect.js" - excluded from git repo by .gitnignore
+populate it as such:
+
+// mysql
+let mysql = require('mysql2')
+
+const pool = mysql.createPool({
+    waitForConnections: true,
+    connectionLimit   : 10,
+    host              : 'localhost',
+    user              : 'root',         <- change this to your root user you setup
+    password          : 'ferret',       <- change 
+    database          : 'lserve'
+}).promise();
+
+// Export it for use in our application
+module.exports = pool;
+
+in your vscode terminal, cd into sql subdirectory
+type "mysql -u <rootUser> -p", enter, then enter the root user password when prompted
+type "source db_cs361_login_dev.sql;"
+type "CALL sp_create_lserveDB();"
+the stored procedure should print out debug information on the new schema and tables created locally.
+you should now be ready to run the web app
