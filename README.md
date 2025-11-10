@@ -1,1 +1,7 @@
-This is the login verification service repo for sprint 2.
+# Request and Recieve Process
+
+### Explanation
+
+### Examples
+
+# UML Sequence Diagram
