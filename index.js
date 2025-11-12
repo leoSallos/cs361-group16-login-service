@@ -4,7 +4,7 @@
 
 var path = require('path');
 const fs = require('fs');
-const db = require('./connect');
+const db = require('./connect.js');
 let http = require('http');
 var express = require('express');
 const session = require('express-session');
