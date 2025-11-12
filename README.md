@@ -56,4 +56,4 @@ fetch("/login", {<request headers>}).then(function(response){
 
 ### UML Sequence Diagram
 
-<img src="umlSequence.png" style="background-color: white;" alt="UML sequence diagram">
+<img src="umlSequence.png" alt="UML sequence diagram">
