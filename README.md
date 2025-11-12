@@ -17,6 +17,16 @@ information (cookies) are modified.
 
 #### Example Request
 
+```
+fetch("/auth", {
+    method: "POST",
+    body: JSON.stringify({
+       username: <username>,
+       password: <password>
+    }),
+    headers: {"Content-Type: "application/json"}
+});
+```
 
 ### Recieving Data
 
@@ -34,5 +44,14 @@ is sent in the body.
 
 #### Example Recieve
 
+```
+fetch("/login", {<request headers>}).then(function(response){
+    if (!response.ok){
+        console.log("Request failed");
+    }
+    // A seccessful recieve will render a page, or redirect to render a page,
+    // the only response bodies with usable data are fails.
+});
+```
 
 ### UML Sequence Diagram
