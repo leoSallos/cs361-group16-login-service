@@ -50,8 +50,10 @@ fetch("/login", {<request headers>}).then(function(response){
         console.log("Request failed");
     }
     // A seccessful recieve will render a page, or redirect to render a page,
-    // the only response bodies with usable data are fails.
+    // and the only response bodies with usable data are fails.
 });
 ```
 
 ### UML Sequence Diagram
+
+<img src="umlSequence.png" alt="UML sequence diagram">
