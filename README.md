@@ -1,7 +1,38 @@
-# Request and Recieve Process
+# Communication Contract
 
-### Explanation
+### Requesting Data
 
-### Examples
+Requesting data is done through an HTTP request. The path of the request is used
+to specify an action with the request:
 
-# UML Sequence Diagram
+GET Requests:
+- `/`: No request body, session information (cookies) are read.
+- `/login`: No request body, only the path is required.
+- `/logout`: No request body, session information (cookies) are modified.
+
+POST Requests:
+- `/reset-database`: No request body, only the path is required.
+- `/auth`: Body must be a JSON object with a username and password field. Session
+information (cookies) are modified.
+
+#### Example Request
+
+
+### Recieving Data
+
+GET Requests:
+- `/`: Sends back an HTML page with the login status of the user.
+- `/login`: Sends a login page for the user to insert their login information.
+- `/logout`: Destroys the user's login cookies, and redirects the user to the 
+index page. No recieve body.
+
+POST Requests:
+- `/reset-database`: Redirects the user to the index page, no recieve body.
+- `/auth`: Sets the user's login cookies to their proper values, and redirects 
+the user to the index page. No body sent on success; on failure an error message
+is sent in the body.
+
+#### Example Recieve
+
+
+### UML Sequence Diagram
