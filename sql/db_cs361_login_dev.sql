@@ -56,9 +56,11 @@ BEGIN
 	INSERT INTO LS_Users (`username`, `firstname`, `password`, `powerLevel`) 
 	VALUES 
 	('Admin1', 'Admin1', 'password!', -1),
-	('Ferret', 'Emery', 'SecurePassword2!', 0),
-	('Leo', 'Leo', 'SecurePassword3!', 0),
-	('Neil', 'Neil', 'SecurePassword4!', 1);
+	('LesFerret', 'Emery', 'SecurePassword2!', 0),
+	('Leo1', 'Leo', 'SecurePassword3!', 0),
+	('Neil400', 'Neil', 'SecurePassword4!', 1),
+	('Giann0', 'Gianno', 'SecurePassword5!', 2),
+	('EwertA', 'Adam', 'SecurePassword6!', 0);
 
 	SET FOREIGN_KEY_CHECKS=1;
 	COMMIT;

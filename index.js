@@ -4,7 +4,7 @@
 
 var path = require('path');
 const fs = require('fs');
-const db = require('./connect');
+const db = require('./connect.js');
 let http = require('http');
 var express = require('express');
 const session = require('express-session');
@@ -114,24 +114,24 @@ app.post('/auth', async (request, response) => {
 	// Ensure the input fields exists and are not empty
 	if (username && password) {
 		// Execute SQL query that'll select the account from the database based on the specified username and password
-		const [loginResult] = await db.query('SELECT * FROM lserve.LS_Users WHERE username = ? AND password = ?', 
+		const [loginResult] = await db.query('CALL lserve.sp_access_user(?, ?);', 
                                             [username, password]);
+        const [resultUser] = loginResult[0];
         // If there is an issue with the query, output the error
-        if (loginResult.length == 0) {
-            response.send('Incorrect Username and/or Password!');
-            request.session.loggedin = false;
-            request.session.username = null;
-            request.session.user = null;
-            setTimeout(() => {response.redirect('/login')}, 1000);
+        if (typeof resultUser === 'undefined') {
+            const resJSON = {"userInfo": 'undefined', 
+                            "userID": -1,
+                            "message": "Login failure!"}
+            response.send(resJSON);
         } 
         else {
-            (console.info(loginResult));
+            (console.info(resultUser));
             // Authenticate the user
-            request.session.user = loginResult;
-            request.session.loggedin = true;
-            request.session.username = username;
+            const resJSON = {"userInfo": resultUser, 
+                            "userID": resultUser.userID,
+                            "message": "Login success!"}
             // Redirect to home page
-            response.redirect('/');
+            response.send(resJSON);
         }		
         response.end();
 	} 
