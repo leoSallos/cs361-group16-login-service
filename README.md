@@ -1,71 +1,49 @@
-This is the login verification service repo for sprint 2.
-
-Communication contract:
-    To REQUEST:
-        NYI
-    To RECEIVE:
-        NYI
-
-![UML](./static/UML.png)
 # Communication Contract
 
 ### Requesting Data
 
-Requesting data is done through an HTTP request. The path of the request is used
-to specify an action with the request:
-
-GET Requests:
-- `/`: No request body, session information (cookies) are read.
-- `/login`: No request body, only the path is required.
-- `/logout`: No request body, session information (cookies) are modified.
-
-POST Requests:
-- `/reset-database`: No request body, only the path is required.
-- `/auth`: Body must be a JSON object with a username and password field. Session
-information (cookies) are modified.
+To request user data via logging in, an HTTP POST request with the path `/auth`
+must be send to the service with a JSON object with the username and password
+of the user in the body of the request.
 
 #### Example Request
 
 ```
-fetch("/auth", {
+const URL = "http://localhost:3001";    // assuming service is local and on
+                                           port 3001 (default)
+const requestBody = {
+    username: <username string>,
+    password: <password string>
+};
+
+var response = fetch(URL + "/auth", {
     method: "POST",
-    body: JSON.stringify({
-       username: <username>,
-       password: <password>
-    }),
+    body: JSON.stringify(requestBody),
     headers: {"Content-Type: "application/json"}
 });
 ```
 
 ### Receiving Data
 
-Receiving data is done as a result of one of the HTTP requests. The following explanations
-are based on the request paths:
+Data is received by the response of the authentication HTTP request. The data
+is a JSON object in the body of the response which contains the user info in
+the service database, the user ID, and a message to go with the response.
 
-GET Requests:
-- `/`: Sends back an HTML page with the login status of the user.
-- `/login`: Sends a login page for the user to insert their login information.
-- `/logout`: Destroys the user's login cookies, and redirects the user to the 
-index page. No recieve body.
+On failure, user info is undefined, user ID is -1.
 
-POST Requests:
-- `/reset-database`: Redirects the user to the index page, no receive body.
-- `/auth`: Sets the user's login cookies to their proper values, and redirects 
-the user to the index page. No body sent on success; on failure an error message
-is sent in the body.
+On improper request, a string stating a missing username or password is reveived.
 
 #### Example Receive
 
 ```
-fetch("/login", {<request headers>}).then(function(response){
-    if (!response.ok){
-        console.log("Request failed");
-    }
-    // A seccessful recieve will render a page, or redirect to render a page,
-    // and the only response bodies with usable data are fails.
-});
+var response = fetch(URL + "/auth", {<request header>});
+var data = response.json();
+
+var userInfo = data.userInfo;
+var userID = data.userID;
+var responseMessage = data.message;
 ```
 
 ### UML Sequence Diagram
 
-<img src="umlSequence.jpg" alt="UML sequence diagram">
+<img src="static/umlSequence.jpg" alt="UML sequence diagram">
