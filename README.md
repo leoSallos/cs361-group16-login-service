@@ -44,6 +44,13 @@ var userID = data.userID;
 var responseMessage = data.message;
 ```
 
+### Debug/direct access routes
+GET Requests:
+- `/`: No request body, session information (cookies) are read out to the console.
+- `/login`: Displays a test page with a login form that will call /auth when submitted.
+- `/logout`: No request body, session information (cookies) are modified.
+- `/reset-database`: Resets the database using the defined stored procedure.
+
 ### UML Sequence Diagram
 
 <img src="static/umlSequence.jpg" alt="UML sequence diagram">

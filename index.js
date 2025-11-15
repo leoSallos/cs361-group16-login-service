@@ -130,13 +130,15 @@ app.post('/auth', async (request, response) => {
             const resJSON = {"userInfo": resultUser, 
                             "userID": resultUser.userID,
                             "message": "Login success!"}
-            // Redirect to home page
             response.send(resJSON);
         }		
         response.end();
 	} 
     else {
-		response.send('Please enter Username and Password!');
+        const resJSON = {"userInfo": 'undefined', 
+                        "userID": -1,
+                        "message": "Please enter a username and password!"}
+        response.send(resJSON);
 		response.end();
 	}
 });
