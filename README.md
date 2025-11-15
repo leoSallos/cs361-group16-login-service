@@ -2,46 +2,65 @@
 
 ### Requesting Data
 
-To request user data via logging in, an HTTP POST request with the path `/auth`
-must be send to the service with a JSON object with the username and password
-of the user in the body of the request.
+Requesting data is done through an HTTP request. The path of the request is used
+to specify an action with the request:
+
+POST Requests:
+- `/auth`: Body must be a JSON object with a "username" and "password" field.
 
 #### Example Request
 
 ```
-const URL = "http://localhost:3001";    // assuming service is local and on
-                                           port 3001 (default)
-const requestBody = {
-    username: <username string>,
-    password: <password string>
-};
-
-var response = fetch(URL + "/auth", {
+await fetch("http://localhost:3001/auth", {
     method: "POST",
-    body: JSON.stringify(requestBody),
+    body: JSON.stringify({
+       username: <username>,
+       password: <password>
+    }),
     headers: {"Content-Type: "application/json"}
 });
 ```
 
 ### Receiving Data
 
-Data is received by the response of the authentication HTTP request. The data
-is a JSON object in the body of the response which contains the user info in
-the service database, the user ID, and a message to go with the response.
-
-On failure, user info is undefined, user ID is -1.
-
-On improper request, a string stating a missing username or password is reveived.
+The server will send back a JSON object containing 
+```
+"userInfo" : [Object], //'undefined' on fail; otherwise username, firstname, lastname, email
+"userID": integer, //-1 on fail, otherwise 0-n
+"message": string
+```
 
 #### Example Receive
 
 ```
-var response = fetch(URL + "/auth", {<request header>});
-var data = response.json();
-
-var userInfo = data.userInfo;
-var userID = data.userID;
-var responseMessage = data.message;
+await fetch('http://localhost:3001/auth',
+    {
+        method: 'POST',
+        body: JSON.stringify({
+            username: _username,
+            password: _password
+        }),
+        headers: {
+            'Content-type':
+                'application/json; charset=UTF-8',
+        },
+    })
+    .then(
+        (response) => {
+            const loginResult = response.json();
+            console.log(json);
+            if (loginResult.userID == -1) {
+                console.info("Login failed!")
+                console.error(loginResult.message)
+            }
+            else {
+                request.session.loggedin = true;
+                request.session.user = [loginResult.userInfo];
+                request.session.username = loginResult.userInfo.username;
+                console.info("Login success! Welcome "+loginResult.userInfo.username);
+            }
+        }
+    )
 ```
 
 ### Debug/direct access routes
@@ -53,4 +72,4 @@ GET Requests:
 
 ### UML Sequence Diagram
 
-<img src="static/umlSequence.jpg" alt="UML sequence diagram">
+<img src="umlSequence.jpg" alt="UML sequence diagram">
