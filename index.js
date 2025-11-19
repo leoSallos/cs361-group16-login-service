@@ -46,7 +46,6 @@ app.use(session({
 }));
 app.use(function (req, res, next) {
     res.locals.session = req.session;
-    //user = req.session.user;
     console.info("Middleware session: "+req.session.username)
     next();
 });
@@ -75,7 +74,6 @@ app.get('/', async (req, res) => {
 	} else {
 		// Not logged in
 		console.info('Please login to view this page!');
-        //response.end();
 	}
     const sessInfo = req.session
     res.render('index', {
