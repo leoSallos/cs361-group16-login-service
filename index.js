@@ -48,6 +48,12 @@ app.use(function (req, res, next) {
     res.locals.session = req.session;
     //user = req.session.user;
     console.info("Middleware session: "+req.session.username)
+
+    // allow cross-origin access control
+    res.setHeader("Access-Control-Allow-Origin", "*");
+    res.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, OPTIONS");
+    res.setHeader("Access-Control-Allow-Headers", "content-type");
+
     next();
 });
 app.use(express.json());
