@@ -112,9 +112,8 @@ app.post('/auth', async (request, response) => {
 	// Ensure the input fields exists and are not empty
 	if (username && password) {
 		// Execute SQL query that'll select the account from the database based on the specified username and password
-        const sql = 'CALL lserve.sp_access_user(?, ?);';
-        const params = [username, password];
-        const [loginResult] = await db.query(sql, params);
+		const [loginResult] = await db.query('CALL lserve.sp_access_user(?, ?);', 
+                                            [username, password]);
         const [resultUser] = loginResult[0];
         // If there is an issue with the query, output the error
         if (typeof resultUser === 'undefined') {
