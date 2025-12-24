@@ -65,29 +65,27 @@ app.use(express.urlencoded({ extended: true }));
 
 // index
 // NOTE: this route uses ASYNC syntax to allow it to wait
-app.get('/', async (req, res) => {
-    // debug 
-    try {
-        const [dbDebug] = await db.query("SHOW TABLES;");
-        console.info(dbDebug);
-    }
-    catch (err) {
-        console.error("Database connection failed");
-    }
+async function debugDatabase() {
+  if (!db || typeof db.query !== 'function') {
+    console.error('db.query is not available');
+    return;
+  }
 
-	if (req.session.loggedin) {
-		// Output username
-		console.info('Welcome back, ' + req.session.username + '!');
-	} else {
-		// Not logged in
-		console.info('Please login to view this page!');
-        //response.end();
-	}
-    const sessInfo = req.session
-    res.render('index', {
-        sessInfo
-    })
-})
+  try {
+    const [tables] = await db.query('SHOW TABLES;');
+    console.info(tables);
+  } catch (err) {
+    console.error('Database connection failed:', err.message);
+  }
+}
+
+app.get('/', async (req, res) => {
+  await debugDatabase();
+  logLoginStatus(req.session);
+  res.render('index', { sessInfo: req.session });
+});
+
+
 app.get('/login', function (req, res) {
     // renders the index page with all posts, and thus all features
     console.log("SERVING LOGIN VIEW")
